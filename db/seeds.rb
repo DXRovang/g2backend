@@ -1,7 +1,16 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+require 'rest-client'
+
+members = RestClient.get 'https://coding-assignment.g2crowd.com/'
+# binding.pry 
+members_array = JSON.parse(members)
+# binding.pry 
+members_array.each do |member|
+  Member.create(
+    name: member["name"],
+    title: member["title"],
+    bio: member["bio"],
+    # votes: member["votes"],
+    image_url: member["image_url"],
+
+  )
+end
